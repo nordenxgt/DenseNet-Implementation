@@ -2,6 +2,7 @@ import argparse
 
 import torch
 from torch import nn
+from torch.optim import lr_scheduler
 import torch.nn.functional as F
 
 from tqdm import tqdm
@@ -15,7 +16,8 @@ def main(epochs: int, num_layers: int, num_classes: int):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     lr = 0.1
-    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=0.0001)
+    optimizer = torch.optim.SGD(model.parameters(), lr=lr, momentum=0.9, weight_decay=1e-4, nesterov=True)
+    scheduler = lr_scheduler.MultiStepLR(optimizer, milestones=[30, 60], gamma=0.1)
     loss_fn = nn.CrossEntropyLoss()
 
     train_dataloader, test_dataloader = dataloader()
@@ -37,7 +39,8 @@ def main(epochs: int, num_layers: int, num_classes: int):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-        
+        scheduler.step()
+
         if epoch % 10 == 0:
             test_loss, test_acc = 0, 0
             model.eval()
@@ -66,7 +69,7 @@ def main(epochs: int, num_layers: int, num_classes: int):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train Script")
     parser.add_argument("--epochs", type=int, default=100)
-    parser.add_argument("--num_layers", type=int, default=34)
+    parser.add_argument("--num_layers", type=int, default=121)
     parser.add_argument("--num_classes", type=int, default=1000)
     args = parser.parse_args()
     main(args.epochs, args.num_layers, args.num_classes)

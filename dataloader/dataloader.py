@@ -12,9 +12,9 @@ def dataloader():
     ])
 
     train_dataset = CustomDataset(root_dir="{DIR}", transform=transform)
-    train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 
     test_dataset = CustomDataset(root_dir="{DIR}", transform=transform)
-    test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True)
+    test_dataloader = DataLoader(test_dataset, batch_size=64, shuffle=True)
     
     return train_dataloader, test_dataloader
