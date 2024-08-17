@@ -27,3 +27,17 @@ Before running the script, place your data directory location for both train and
 ```sh
 python train.py --epochs 100 --num_layers 121 --num_classes 1000
 ```
+
+## Citation
+
+```
+@misc{huang2018denselyconnectedconvolutionalnetworks,
+      title={Densely Connected Convolutional Networks}, 
+      author={Gao Huang and Zhuang Liu and Laurens van der Maaten and Kilian Q. Weinberger},
+      year={2018},
+      eprint={1608.06993},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/1608.06993}, 
+}
+```
